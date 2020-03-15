@@ -124,6 +124,7 @@ void pid_const_transport()
         if (message != NULL)
         {
             message_len = strlen(message);
+            pid_const_data = read_pid_data_from_json(message);
             sprintf(message_len_buffer, "%d", message_len);
         }
         else
@@ -136,9 +137,6 @@ void pid_const_transport()
         if (err > 0)
         {
             strcpy(message_len_buffer, "");
-
-            pid_const_data = read_pid_data_from_json(message);
-            logD(TAG_transport, "%f", pid_const_data.ki);
         }
         else
         {
