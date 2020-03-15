@@ -5,6 +5,7 @@ static const char* TAG_transport = "transport";
 esp_err_t init_queue(void)
 {
     pid_struct_queue = xQueueCreate(1000, sizeof(struct pid_terms));
+    pid_const_read_write_mutex = xSemaphoreCreateMutex();
 
     if (pid_struct_queue == NULL)
     {
@@ -16,6 +17,18 @@ esp_err_t init_queue(void)
         logD(TAG_transport, "%s", "Queue created");
         return ESP_OK;
     }
+
+    if (pid_const_read_write_mutex == NULL)
+    {
+        logW(TAG_transport, "%s", "Read/Write Mutex created");
+        return ESP_OK;
+    }
+    else
+    {
+        logD(TAG_transport, "%s", "Read/Write Mutex creation failed");
+        return ESP_FAIL;
+    }
+    
 }
 
 void init_transport(void)
@@ -124,7 +137,21 @@ void pid_const_transport()
         if (message != NULL)
         {
             message_len = strlen(message);
-            pid_const_data = read_pid_data_from_json(message);
+
+            if (xSemaphoreTake(pid_const_read_write_mutex, (TickType_t) 100) == pdTRUE)
+            {
+                logD(TAG_transport, "%s", "pid_const_data ownership taken for writing");
+
+                pid_const_data = read_pid_data_from_json(message);
+                xSemaphoreGive(pid_const_read_write_mutex);
+
+                logD(TAG_transport, "%s", "pid_const_data ownership released");
+            }
+            else
+            {
+                logW(TAG_transport, "%s", "pid_const_data already locked, couldn't take ownership");
+            }
+            
             sprintf(message_len_buffer, "%d", message_len);
         }
         else
@@ -143,5 +170,22 @@ void pid_const_transport()
             logE(TAG_transport, "%s", "tcp send failed");
             vTaskDelete(pid_const_transport_handle);
         }
+    }
+}
+
+struct pid_const pid_const_read()
+{
+    while(true)
+    {
+        if(xSemaphoreGetMutexHolder(pid_const_read_write_mutex) == NULL)
+        {
+            return pid_const_data;
+            break;
+        }
+        else
+        {
+            logW(TAG_transport, "%s", "pid_const_data is locked for writing");
+        }
+        
     }
 }

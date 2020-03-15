@@ -11,11 +11,13 @@
 #include "esp_system.h"
 #include "freertos/queue.h"
 #include "freertos/event_groups.h"
+#include "freertos/semphr.h"
 #include "esp_err.h"
 #include "protocol_examples_common.h"
 
 TaskHandle_t pid_transport_handle, pid_const_transport_handle;
 QueueHandle_t pid_struct_queue;
+SemaphoreHandle_t pid_const_read_write_mutex;
 
 #define MESSAGE_QUEUE_SIZE CONFIG_MESSAGE_QUEUE_SIZE 
 struct pid_terms
@@ -41,5 +43,5 @@ esp_err_t send_to_queue(struct pid_terms pid_data);
 struct data_recv receive_from_queue(void);
 void pid_transport();
 void pid_const_transport();
-
+struct pid_const pid_const_read();
 #endif
