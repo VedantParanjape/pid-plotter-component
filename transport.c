@@ -9,24 +9,24 @@ esp_err_t init_queue(void)
 
     if (pid_struct_queue == NULL)
     {
-        logW(TAG_transport, "%s", "Queue creation failed");
+        logE(TAG_transport, "%s", "Queue creation failed");
         return ESP_FAIL;
     }
     else
     {
-        logD(TAG_transport, "%s", "Queue created");
+        logI(TAG_transport, "%s", "Queue created");
         return ESP_OK;
     }
 
     if (pid_const_read_write_mutex == NULL)
     {
-        logW(TAG_transport, "%s", "Read/Write Mutex created");
-        return ESP_OK;
+        logE(TAG_transport, "%s", "Read/Write Mutex creation failed");
+        return ESP_FAIL;
     }
     else
     {
-        logD(TAG_transport, "%s", "Read/Write Mutex creation failed");
-        return ESP_FAIL;
+        logI(TAG_transport, "%s", "Read/Write Mutex created");
+        return ESP_OK;
     }
     
 }
@@ -51,12 +51,12 @@ esp_err_t send_to_queue(struct pid_terms pid_data)
     }
     else if(qerror == errQUEUE_FULL)
     {
-        logW(TAG_transport, "%s", "Data not sent to Queue, Queue full");
+        logE(TAG_transport, "%s", "Data not sent to Queue, Queue full");
         return ESP_FAIL;
     }
     else
     {
-        logW(TAG_transport, "%s", "Unknown error");
+        logE(TAG_transport, "%s", "Unknown error");
         return ESP_FAIL;
     }
 }
@@ -81,7 +81,7 @@ struct data_recv receive_from_queue(void)
     }
     else
     {
-        logW(TAG_transport, "%s", "Unknown error");
+        logE(TAG_transport, "%s", "Unknown error");
         ret_data.err = ESP_FAIL;
     }
 
@@ -103,19 +103,19 @@ void pid_transport()
             message = create_pid_data_to_json(pid.data.current, pid.data.error, pid.data.P, pid.data.I, pid.data.D);
 
             int len = send_data(handle, message);
-            logI(TAG_transport, "%d %s", len, "bytes of data sent");
+            logD(TAG_transport, "%d %s", len, "bytes of data sent");
         }
         else if(pid.err == ESP_FAIL)
         {
             message = "no data received from Queue";
             int len = send_data(handle, message);
-            logI(TAG_transport, "%d %s", len, "no data received from Queue");
+            logW(TAG_transport, "%d %s", len, "no data received from Queue");
         }
         else
         {
             message = "Unknown error";
             int len = send_data(handle, message);
-            logI(TAG_transport, "%d %s", len, "Unknown error");
+            logE(TAG_transport, "%d %s", len, "Unknown error");
         }
     }
 
@@ -140,12 +140,12 @@ void pid_const_transport()
 
             if (xSemaphoreTake(pid_const_read_write_mutex, (TickType_t) 100) == pdTRUE)
             {
-                logD(TAG_transport, "%s", "pid_const_data ownership taken for writing");
+                logI(TAG_transport, "%s", "pid_const_data ownership taken for writing");
 
                 pid_const_data = read_pid_data_from_json(message);
                 xSemaphoreGive(pid_const_read_write_mutex);
 
-                logD(TAG_transport, "%s", "pid_const_data ownership released");
+                logI(TAG_transport, "%s", "pid_const_data ownership released");
             }
             else
             {

@@ -14,9 +14,12 @@ void network_manager(struct network_data* nm)
     nm->sock = socket(nm->addr_family, SOCK_DGRAM, nm->ip_protocol);
     if (nm->sock < 0)
     {
-        ESP_LOGE(TAG, "Unable to create socket: errno %d", errno);
+        logE(TAG, "Unable to create socket: errno %d", errno);
     }
-    ESP_LOGI(TAG, "Socket created, connected to %s:%d", HOST_IP_ADDR, PORT);
+    else
+    {
+        logI(TAG, "Socket created, connected to %s:%d", HOST_IP_ADDR, PORT);
+    }
 }
 
 int send_data(struct network_data* nm, char* payload)
@@ -24,9 +27,13 @@ int send_data(struct network_data* nm, char* payload)
     int err = sendto(nm->sock, payload, strlen(payload), 0, (struct sockaddr *)&(nm->dest_addr), sizeof(nm->dest_addr));
     if (err < 0) 
     {
-        ESP_LOGE(TAG, "Error occurred during sending: errno %d", errno);
+        logE(TAG, "Error occurred during sending: errno %d", errno);
     }
-    ESP_LOGI(TAG, "Message sent");
+    else
+    {
+        logD(TAG, "%s", "Message sent");
+    }
+    
     return err;
 }
 
@@ -38,21 +45,21 @@ char* recieve_data(struct network_data* nm)
 
     if (len < 0) 
     {
-        ESP_LOGE(TAG, "recvfrom failed: errno %d", errno);
+        logE(TAG, "recvfrom failed: errno %d", errno);
         return NULL;
     }
     else
     {
         nm->rx_buffer[len] = 0; // Null-terminate whatever we received and treat like a string
-        ESP_LOGI(TAG, "Received %d bytes from %s:", len, nm->addr_str);
-        ESP_LOGI(TAG, "%s", nm->rx_buffer);
+        logD(TAG, "Received %d bytes from %s:", len, nm->addr_str);
+        logD(TAG, "%s", nm->rx_buffer);
         return nm->rx_buffer;
     }
 }
 
 void close_network_manager(struct network_data* nm)
 {
-    ESP_LOGE(TAG, "Shutting down socket");
+    logI(TAG, "%s", "Shutting down socket");
     shutdown(nm->sock, 0);
     close(nm->sock);
     free(nm->rx_buffer);

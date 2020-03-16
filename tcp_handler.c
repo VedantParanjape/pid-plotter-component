@@ -14,22 +14,22 @@ void tcp_network_manager(struct tcp_network_data* nm)
     nm->sock = socket(nm->addr_family, SOCK_STREAM, nm->ip_protocol);
     if (nm->sock < 0)
     {
-        ESP_LOGE(TAG, "Unable to create socket: errno %d", errno);
+        logE(TAG, "Unable to create socket: errno %d", errno);
     }
     else
     {
-        ESP_LOGI(TAG, "Socket created, connected to %s:%d", TCP_HOST_IP_ADDR, TCP_PORT);
+        logI(TAG, "Socket created, connected to %s:%d", TCP_HOST_IP_ADDR, TCP_PORT);
     }
 
     int err = connect(nm->sock, (struct sockaddr *)&nm->dest_addr, sizeof(nm->dest_addr));
     if (err != 0) {
         tcp_close_network_manager(nm);
-        ESP_LOGE(TAG, "Socket unable to connect: errno %d", errno);
+        logE(TAG, "Socket unable to connect: errno %d", errno);
         nm->sock = -1;
     }
     else
     {
-        ESP_LOGI(TAG, "%s", "Successfully connected");
+        logI(TAG, "%s", "Successfully connected");
     }
 }
 
@@ -37,7 +37,7 @@ int tcp_send_data(struct tcp_network_data* nm, char* payload)
 {
     if(nm->sock < 0)
     {
-        ESP_LOGE(TAG, "%s", "Socket doesnot exist");
+        logE(TAG, "%s", "Socket doesnot exist");
         return -1;
     }
     else
@@ -45,9 +45,12 @@ int tcp_send_data(struct tcp_network_data* nm, char* payload)
         int err = send(nm->sock, payload, strlen(payload), 0);
         if (err < 0) 
         {
-            ESP_LOGE(TAG, "Error occurred during sending: errno %d", errno);
+            logE(TAG, "Error occurred during sending: errno %d", errno);
         }
-        ESP_LOGI(TAG, "Message sent");
+        else
+        {
+            logD(TAG, "%s", "Message sent");
+        }
         return err;
     }
 }
@@ -56,7 +59,7 @@ char* tcp_recieve_data(struct tcp_network_data* nm)
 {
     if (nm->sock < 0)
     {
-        ESP_LOGE(TAG, "%s", "Socket doesnot exist");
+        logE(TAG, "%s", "Socket doesnot exist");
         return NULL;
     }
     else
@@ -65,14 +68,14 @@ char* tcp_recieve_data(struct tcp_network_data* nm)
 
         if (len < 0) 
         {
-            ESP_LOGE(TAG, "recvfrom failed: errno %d", errno);
+            logE(TAG, "recvfrom failed: errno %d", errno);
             return NULL;
         }
         else
         {
             nm->rx_buffer[len] = 0; // Null-terminate whatever we received and treat like a string
-            ESP_LOGI(TAG, "Received %d bytes from %s:", len, nm->addr_str);
-            ESP_LOGI(TAG, "%s", nm->rx_buffer);
+            logD(TAG, "Received %d bytes from %s:", len, nm->addr_str);
+            logD(TAG, "%s", nm->rx_buffer);
             return nm->rx_buffer;
         }
     }
@@ -80,7 +83,7 @@ char* tcp_recieve_data(struct tcp_network_data* nm)
 
 void tcp_close_network_manager(struct tcp_network_data* nm)
 {
-    ESP_LOGE(TAG, "Shutting down socket");
+    logI(TAG, "%s", "Shutting down socket");
     shutdown(nm->sock, 0);
     close(nm->sock);
 }
