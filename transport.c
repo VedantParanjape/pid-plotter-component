@@ -138,7 +138,7 @@ void pid_const_transport()
         {
             message_len = strlen(message);
 
-            if (xSemaphoreTake(pid_const_read_write_mutex, (TickType_t) 100) == pdTRUE)
+            if (xSemaphoreTake(pid_const_read_write_mutex, (TickType_t) 100) == pdTRUE && message_len > 0)
             {
                 logI(TAG_transport, "%s", "pid_const_data ownership taken for writing");
 
@@ -149,7 +149,8 @@ void pid_const_transport()
             }
             else
             {
-                logW(TAG_transport, "%s", "pid_const_data already locked, couldn't take ownership");
+                xSemaphoreGive(pid_const_read_write_mutex);
+                logW(TAG_transport, "%s", "pid_const_data already locked, couldn't take ownership or tcp recv message is corrupted");
             }
             
             sprintf(message_len_buffer, "%d", message_len);
