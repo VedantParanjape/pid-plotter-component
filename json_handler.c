@@ -22,10 +22,10 @@ struct pid_const read_pid_data_from_json(const char* data)
     struct pid_const data_extracted;
     const cJSON *data_json = cJSON_Parse(data);
 
-    data_extracted.kp = cJSON_GetObjectItemCaseSensitive(data_json, "kp")->valuedouble;
-    data_extracted.ki = cJSON_GetObjectItemCaseSensitive(data_json, "ki")->valuedouble;
-    data_extracted.kd = cJSON_GetObjectItemCaseSensitive(data_json, "kd")->valuedouble;
-    data_extracted.setpoint = cJSON_GetObjectItemCaseSensitive(data_json, "setpoint")->valuedouble;
+    data_extracted.kp = cJSON_GetObjectItemCaseSensitive(data_json, "Kp")->valuedouble;
+    data_extracted.ki = cJSON_GetObjectItemCaseSensitive(data_json, "Ki")->valuedouble;
+    data_extracted.kd = cJSON_GetObjectItemCaseSensitive(data_json, "Kd")->valuedouble;
+    data_extracted.setpoint = cJSON_GetObjectItemCaseSensitive(data_json, "SetPoint")->valuedouble;
 
     cJSON_Delete(data_json);
     return data_extracted;
