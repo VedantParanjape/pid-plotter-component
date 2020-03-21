@@ -53,7 +53,6 @@ void broad()
 
 void app_main(void)
 {
-
     xTaskCreate(broad, "send", 4096, NULL, 1, NULL);
     plotter();
 }
