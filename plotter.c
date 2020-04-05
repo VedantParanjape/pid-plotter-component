@@ -1,5 +1,12 @@
 #include "plotter.h"
 
+
+/**
+ * Wrapper function to run the plotter functionality on a separate core
+ * 
+ * :param void:
+ * :return: void
+**/
 void plotter()
 {
     ESP_ERROR_CHECK(init_queue());

@@ -2,6 +2,12 @@
 
 static const char* TAG_transport = "transport";
 
+/**
+ * Initialises message queue
+ * 
+ * :param void:
+ * :return: esp_err_t ESP_OK - if queue init sucessfully, ESP_FAIL - if queue init failed
+**/
 esp_err_t init_queue(void)
 {
     pid_struct_queue = xQueueCreate(1000, sizeof(struct pid_terms));
@@ -31,6 +37,12 @@ esp_err_t init_queue(void)
     
 }
 
+/**
+ * Initialises transport, i.e. connect to wifi
+ * 
+ * :param void:
+ * :return: void
+**/
 void init_transport(void)
 {
     ESP_ERROR_CHECK(nvs_flash_init());
@@ -40,6 +52,12 @@ void init_transport(void)
     ESP_ERROR_CHECK(example_connect());
 }
 
+/**
+ * Sends pid_data struct to message queue
+ * 
+ * :param pid_data: pid_terms struct contains pid values
+ * :return: esp_err_t ESP_OK - if queue init sucessfully, ESP_FAIL - if queue init failed
+**/
 esp_err_t send_to_queue(struct pid_terms pid_data)
 {
     BaseType_t qerror = xQueueSendToBack(pid_struct_queue, (void*)&pid_data, (TickType_t) 0/portTICK_PERIOD_MS);
@@ -61,6 +79,12 @@ esp_err_t send_to_queue(struct pid_terms pid_data)
     }
 }
 
+/**
+ * Receive data from queue
+ * 
+ * :param void:
+ * :return: struct data_recv - struct containing pid_terms and esp_err_t as members. pid_terms contains pid terms
+**/
 struct data_recv receive_from_queue(void)
 {
     struct pid_terms data;
@@ -88,6 +112,12 @@ struct data_recv receive_from_queue(void)
     return ret_data;
 }
 
+/**
+ * Handles UDP client, which sends pid_terms received through message queue
+ * 
+ * :param void:
+ * :return: void
+**/
 void pid_transport()
 {
     struct network_data* handle = malloc(sizeof(struct network_data));
@@ -122,6 +152,13 @@ void pid_transport()
     close_network_manager(handle);
 }
 
+
+/**
+ * Handles TCP client, which receives pid_constants from server, and parses the data and stores it in a global struct pid_const_data
+ * 
+ * :param void:
+ * :return: void
+**/
 void pid_const_transport()
 {
     struct tcp_network_data* handle = malloc(sizeof(struct tcp_network_data));
@@ -174,6 +211,13 @@ void pid_const_transport()
     }
 }
 
+
+/**
+ * Returns pid_const_data struct. Checks if the resource is blocked by mutex for writing or it is accessible, waits till pid_const_data is accessible and returns it
+ * 
+ * :param void:
+ * :return: struct pid_const - Returns pid_const_data, can be used to access Kp, Ki, Kd and current values
+**/
 struct pid_const pid_const_read()
 {
     while(true)
