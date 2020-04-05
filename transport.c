@@ -3,10 +3,9 @@
 static const char* TAG_transport = "transport";
 
 /**
- * Initialises message queue
+ * @brief Initialises message queue
  * 
- * :param void:
- * :return: esp_err_t ESP_OK - if queue init sucessfully, ESP_FAIL - if queue init failed
+ * @return esp_err_t ESP_OK - if queue init sucessfully, ESP_FAIL - if queue init failed
 **/
 esp_err_t init_queue(void)
 {
@@ -38,10 +37,7 @@ esp_err_t init_queue(void)
 }
 
 /**
- * Initialises transport, i.e. connect to wifi
- * 
- * :param void:
- * :return: void
+ * @brief Initialises transport, i.e. connect to wifi
 **/
 void init_transport(void)
 {
@@ -53,10 +49,10 @@ void init_transport(void)
 }
 
 /**
- * Sends pid_data struct to message queue
+ * @brief Sends pid_data struct to message queue
  * 
- * :param pid_data: pid_terms struct contains pid values
- * :return: esp_err_t ESP_OK - if queue init sucessfully, ESP_FAIL - if queue init failed
+ * @param pid_data pid_terms struct contains pid values
+ * @return esp_err_t ESP_OK - if queue init sucessfully, ESP_FAIL - if queue init failed
 **/
 esp_err_t send_to_queue(struct pid_terms pid_data)
 {
@@ -80,10 +76,9 @@ esp_err_t send_to_queue(struct pid_terms pid_data)
 }
 
 /**
- * Receive data from queue
+ * @brief Receive data from queue
  * 
- * :param void:
- * :return: struct data_recv - struct containing pid_terms and esp_err_t as members. pid_terms contains pid terms
+ * @return struct data_recv - struct containing pid_terms and esp_err_t as members. pid_terms contains pid terms
 **/
 struct data_recv receive_from_queue(void)
 {
@@ -113,10 +108,7 @@ struct data_recv receive_from_queue(void)
 }
 
 /**
- * Handles UDP client, which sends pid_terms received through message queue
- * 
- * :param void:
- * :return: void
+ * @brief Handles UDP client, which sends pid_terms received through message queue
 **/
 void pid_transport()
 {
@@ -154,10 +146,7 @@ void pid_transport()
 
 
 /**
- * Handles TCP client, which receives pid_constants from server, and parses the data and stores it in a global struct pid_const_data
- * 
- * :param void:
- * :return: void
+ * @brief  Handles TCP client, which receives pid_constants from server, and parses the data and stores it in a global struct pid_const_data
 **/
 void pid_const_transport()
 {
@@ -213,10 +202,9 @@ void pid_const_transport()
 
 
 /**
- * Returns pid_const_data struct. Checks if the resource is blocked by mutex for writing or it is accessible, waits till pid_const_data is accessible and returns it
+ * @brief Returns pid_const_data struct. Checks if the resource is blocked by mutex for writing or it is accessible, waits till pid_const_data is accessible and returns it
  * 
- * :param void:
- * :return: struct pid_const - Returns pid_const_data, can be used to access Kp, Ki, Kd and current values
+ * @return struct pid_const - Returns pid_const_data, can be used to access Kp, Ki, Kd and current values
 **/
 struct pid_const pid_const_read()
 {

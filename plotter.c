@@ -2,10 +2,7 @@
 
 
 /**
- * Wrapper function to run the plotter functionality on a separate core
- * 
- * :param void:
- * :return: void
+ * @brief Wrapper function to run the plotter functionality on a separate core
 **/
 void plotter()
 {

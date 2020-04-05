@@ -3,10 +3,10 @@
 static const char *TAG = "tcp_handler";
 
 /**
- * Manages TCP connection to the server
+ * @brief Manages TCP connection to the server
  * 
- * :param nm: tcp_network_data struct which contains necessary data for a TCP connection
- * :return: void
+ * @param nm tcp_network_data struct which contains necessary data for a TCP connection
+ * @return void
  **/
 void tcp_network_manager(struct tcp_network_data* nm)
 {
@@ -40,11 +40,11 @@ void tcp_network_manager(struct tcp_network_data* nm)
 }
 
 /**
- * Sends data to the server through a TCP socket
+ * @brief Sends data to the server through a TCP socket
  * 
- * :param nm: A pointer to tcp_network_data struct
- * :param payload: char array which contains data to be sent
- * :return: int - returns -1 if sending failed, number of bytes sent if successfully sent the data
+ * @param nm A pointer to tcp_network_data struct
+ * @param payload char array which contains data to be sent
+ * @return int - returns -1 if sending failed, number of bytes sent if successfully sent the data
  **/
 int tcp_send_data(struct tcp_network_data* nm, char* payload)
 {
@@ -69,10 +69,10 @@ int tcp_send_data(struct tcp_network_data* nm, char* payload)
 }
 
 /**
- * Receives data from TCP server
+ * @brief Receives data from TCP server
  * 
- * :param nm: tcp_network_data struct which contains connection info
- * :return: char array which contains data received
+ * @param nm tcp_network_data struct which contains connection info
+ * @return char array which contains data received
  **/
 char* tcp_recieve_data(struct tcp_network_data* nm)
 {
@@ -101,10 +101,10 @@ char* tcp_recieve_data(struct tcp_network_data* nm)
 }
 
 /**
- * Shutdown active connection, deallocate memory
+ * @brief Shutdown active connection, deallocate memory
  * 
- * :param nm: tcp_network_data struct which contains connection info
- * :return: void
+ * @param nm tcp_network_data struct which contains connection info
+ * @return void
  **/
 void tcp_close_network_manager(struct tcp_network_data* nm)
 {

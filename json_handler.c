@@ -1,14 +1,14 @@
 #include "json_handler.h"
 
 /**
- * Converts PID data to a json string
+ * @brief Converts PID data to a json string
  * 
- * :param current: current value
- * :param error: error value, deviation of current from setpoint
- * :param P: Value of Proportional Gain (P)
- * :param I: Value of Integral Gain (I)
- * :param D: Value of Derivative Gain (D)
- * :return: char* - Json string of the data sent through parameters.
+ * @param current current value
+ * @param error error value, deviation of current from setpoint
+ * @param P Value of Proportional Gain (P)
+ * @param I Value of Integral Gain (I)
+ * @param D Value of Derivative Gain (D)
+ * @return char* - Json string of the data sent through parameters.
  **/
 char *create_pid_data_to_json(float current, float error, float P, float I, float D)
 {
@@ -28,10 +28,10 @@ char *create_pid_data_to_json(float current, float error, float P, float I, floa
 }
 
 /**
- * Reads PID constant data from a json formatted string
+ * @brief Reads PID constant data from a json formatted string
  * 
- * :param data: Pointer to char array containging the json formatted string
- * :return: struct pid_const - Returns a array of PID constants, extracted from the json string
+ * @param data: Pointer to char array containging the json formatted string
+ * @return struct pid_const - Returns a array of PID constants, extracted from the json string
  **/
 struct pid_const read_pid_data_from_json(const char* data)
 {
