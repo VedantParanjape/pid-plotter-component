@@ -1,6 +1,6 @@
 # PID-Plotter
 
-ESP-IDF component for [pid-tuning-gui](https://github.com/VedantParanjape/pid-tuning-gui). This transports data, between the plotter and esp device.
+* ESP-IDF component for [pid-tuning-gui](https://github.com/VedantParanjape/pid-tuning-gui). This transports data, between the plotter and esp device.
 
 # Requirements
 
@@ -84,3 +84,6 @@ void app_main(void)
     plotter();
 }
 ```
+# Detailed documentation
+
+* https://vedantparanjape.github.io/pid-plotter-component/ 
