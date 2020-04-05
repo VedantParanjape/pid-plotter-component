@@ -80,6 +80,8 @@
   <compound refid="plotter_8c" kind="file"><name>plotter.c</name>
     <member refid="plotter_8c_1acc8c0bc33035955e5c765b474fb33ef1" kind="function"><name>plotter</name></member>
   </compound>
+  <compound refid="_r_e_a_d_m_e_8md" kind="file"><name>README.md</name>
+  </compound>
   <compound refid="tcp__handler_8c" kind="file"><name>tcp_handler.c</name>
     <member refid="tcp__handler_8c_1a5a85b9c772bbeb480b209a3e6ea92b4c" kind="variable"><name>TAG</name></member>
     <member refid="tcp__handler_8c_1a6be7633691ba5c012155871a84ade82e" kind="function"><name>tcp_network_manager</name></member>
@@ -105,5 +107,7 @@
     <member refid="udp__handler_8c_1a3e138ed94c89bd74c249c9f4a1a4c642" kind="function"><name>close_network_manager</name></member>
   </compound>
   <compound refid="dir_d44c64559bbebec7f509842c48db8b23" kind="dir"><name>/home/vedant/Programming/projects/pid-tuning-gui/esp_codes/components/pid_plotter/include</name>
+  </compound>
+  <compound refid="indexpage" kind="page"><name>index</name>
   </compound>
 </doxygenindex>

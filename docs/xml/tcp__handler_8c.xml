@@ -4,28 +4,24 @@
     <compoundname>tcp_handler.c</compoundname>
     <includes refid="tcp__handler_8h" local="yes">tcp_handler.h</includes>
     <incdepgraph>
-      <node id="192">
+      <node id="194">
         <label>freertos/FreeRTOS.h</label>
       </node>
-      <node id="199">
+      <node id="201">
         <label>nvs_flash.h</label>
       </node>
-      <node id="201">
+      <node id="203">
         <label>protocol_examples_common.h</label>
       </node>
-      <node id="188">
+      <node id="190">
         <label>/home/vedant/Programming/projects/pid-tuning-gui/esp_codes/components/pid_plotter/tcp_handler.c</label>
         <link refid="tcp__handler_8c"/>
-        <childnode refid="189" relation="include">
-        </childnode>
-      </node>
-      <node id="189">
-        <label>tcp_handler.h</label>
-        <link refid="tcp__handler_8h"/>
-        <childnode refid="190" relation="include">
-        </childnode>
         <childnode refid="191" relation="include">
         </childnode>
+      </node>
+      <node id="191">
+        <label>tcp_handler.h</label>
+        <link refid="tcp__handler_8h"/>
         <childnode refid="192" relation="include">
         </childnode>
         <childnode refid="193" relation="include">
@@ -56,47 +52,51 @@
         </childnode>
         <childnode refid="206" relation="include">
         </childnode>
-      </node>
-      <node id="195">
-        <label>esp_system.h</label>
-      </node>
-      <node id="200">
-        <label>esp_netif.h</label>
-      </node>
-      <node id="196">
-        <label>esp_wifi.h</label>
-      </node>
-      <node id="206">
-        <label>lwip/netdb.h</label>
-      </node>
-      <node id="190">
-        <label>string.h</label>
-      </node>
-      <node id="198">
-        <label>esp_log.h</label>
-      </node>
-      <node id="191">
-        <label>sys/param.h</label>
-      </node>
-      <node id="204">
-        <label>lwip/sockets.h</label>
-      </node>
-      <node id="205">
-        <label>lwip/sys.h</label>
-      </node>
-      <node id="203">
-        <label>lwip/err.h</label>
+        <childnode refid="207" relation="include">
+        </childnode>
+        <childnode refid="208" relation="include">
+        </childnode>
       </node>
       <node id="197">
-        <label>esp_event.h</label>
-      </node>
-      <node id="193">
-        <label>freertos/task.h</label>
-      </node>
-      <node id="194">
-        <label>freertos/event_groups.h</label>
+        <label>esp_system.h</label>
       </node>
       <node id="202">
+        <label>esp_netif.h</label>
+      </node>
+      <node id="198">
+        <label>esp_wifi.h</label>
+      </node>
+      <node id="208">
+        <label>lwip/netdb.h</label>
+      </node>
+      <node id="192">
+        <label>string.h</label>
+      </node>
+      <node id="200">
+        <label>esp_log.h</label>
+      </node>
+      <node id="193">
+        <label>sys/param.h</label>
+      </node>
+      <node id="206">
+        <label>lwip/sockets.h</label>
+      </node>
+      <node id="207">
+        <label>lwip/sys.h</label>
+      </node>
+      <node id="205">
+        <label>lwip/err.h</label>
+      </node>
+      <node id="199">
+        <label>esp_event.h</label>
+      </node>
+      <node id="195">
+        <label>freertos/task.h</label>
+      </node>
+      <node id="196">
+        <label>freertos/event_groups.h</label>
+      </node>
+      <node id="204">
         <label>logger.h</label>
       </node>
     </incdepgraph>
