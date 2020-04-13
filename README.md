@@ -2,7 +2,7 @@
 
 * ESP-IDF component for [pid-tuning-gui](https://github.com/VedantParanjape/pid-tuning-gui). This transports data, between the plotter and esp device.
 
-Example App: ![](https://github.com/VedantParanjape/esp-component-examples/tree/master/pid_plotter_example)
+Example App: ![https://github.com/VedantParanjape/esp-component-examples/tree/master/pid_plotter_example](https://github.com/VedantParanjape/esp-component-examples/tree/master/pid_plotter_example)
 # Requirements
 
 * [logger](https://github.com/VedantParanjape/logger)  
@@ -57,7 +57,7 @@ PID constants json format
 PID data json format
 ```
 # Example Code
-* Detailed Example App: ![](https://github.com/VedantParanjape/esp-component-examples/tree/master/pid_plotter_example)
+* Detailed Example App: ![https://github.com/VedantParanjape/esp-component-examples/tree/master/pid_plotter_example](https://github.com/VedantParanjape/esp-component-examples/tree/master/pid_plotter_example)
 
 ```C
 #include "pid_plotter.h"
