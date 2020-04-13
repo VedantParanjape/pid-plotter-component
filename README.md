@@ -12,6 +12,7 @@ Example App: ![https://github.com/VedantParanjape/esp-component-examples/tree/ma
     cd <your_esp_idf_project>
     mkdir components
     cd components
+    cp $IDF_PATH/examples/common_components/protocol_examples_common . -r
     git clone https://github.com/VedantParanjape/logger   
     git clone https://github.com/VedantParanjape/pid-plotter-component pid_plotter
 
